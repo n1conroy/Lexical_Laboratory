@@ -33,8 +33,16 @@ class TrainPipeline:
     def run(self):
         # Prepare features and labels depending on vectorizer type
         if self.config["vectorizer"]["type"].lower() == "glove":
-            # GloVe vectorizer returns dense numpy matrix directly
-            X = self.vectorizer.fit_transform(self.data)
+        
+        # GloVe vectorizer returns dense numpy matrix directly
+        if self.config["vectorizer"]["type"].lower() == "glove":
+            timesteps = self.config["model"].get("timesteps", 100)
+            X = prepare_lstm_inputs(self.data, self.vectorizer, timesteps)
+        else:
+            texts = [rec["preprocessed_text"] for rec in self.data]
+            X = self.vectorizer.fit_transform(texts)
+            
+            #X = self.vectorizer.fit_transform(self.data)
         else:
             # TFIDF returns sparse matrix
             texts = [rec["preprocessed_text"] for rec in self.data]
