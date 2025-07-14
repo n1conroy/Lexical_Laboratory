@@ -1,6 +1,6 @@
 # Lexical Lab
 
-**Entity-Level Sentiment & Linking Evaluation Suite**
+**Entity-Level Sentiment & Linking Evaluation tools**
 
 NLP experimentation framework for benchmarking entity-specific sentiment analysis and entity linking using a variety of modeling pipelines. Rapidly prototype, compare, and validate classic and neural NLP architectures using scikit-learn and TensorFlow.
 
