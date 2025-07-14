@@ -62,3 +62,70 @@ bash scripts/download_glove.sh
 
 # Run an experiment
 python run_experiment.py --config config/config.yaml
+
+python run_experiment.py --config config/config.yaml
+Example Dataset Format
+Each row contains a document, a recognized entity within it, and the associated sentiment label.
+
+```
+```
+doc_id,text,entity,sentiment
+1,"I am concerned about my next trip overseas- are these airplanes safe?.",["Air Travel, TSA"], {"wary":7, "certainty":4}
+1,"Basically breathless about my last trip to Tahiti. Make sure to check out Laguna Lodge.",["Laguna Lodge", "Tahiti"],{"adventurous":6, "energetic":7, "certainty":4}
+2,"Amazon faced backlash over working conditions.",["Amazon"],{"dissent":7, "certainty":1}
+```
+```
+lexical-lab/
+├── config/                 # Experiment configuration files
+├── ci/                     # GitHub Actions or other CI integrations
+├── data/                   # Input datasets and intermediate files
+├── embeddings/             # GloVe loader and vectorization tools
+├── models/                 # Model implementations (linear, LSTM, etc.)
+├── pipeline/               # Training and evaluation pipeline
+├── preprocessing/          # Text processing and entity extraction
+├── reports/                # Generated outputs and metrics
+├── scripts/                # GloVe download and other shell tools
+├── run_experiment.py       # Main experiment entrypoint
+└── requirements.txt
+```
+## Configuration
+Model and experiment settings are defined in config/config.yaml. This includes:
+Model type (logreg, svm, dense, lstm)
+Vectorizer type (tfidf, glove)
+Tokenizer and segmentation settings
+Training parameters (epochs, batch size, etc.)
+
+```
+Requirements
+Python 3.9+
+
+spaCy
+
+scikit-learn
+
+TensorFlow 2.x
+
+pandas
+
+numpy
+
+matplotlib
+
+seaborn
+```
+## Entity Linking
+This framework includes simple local linking via dictionary-based mappings and can be extended to use APIs such as Wikidata. Entity linking is modular and pluggable via preprocessing hooks.
+
+## Output
+All experiments generate structured output under reports/ including:
+
+Accuracy, precision, recall, F1
+
+Per-entity performance breakdown
+
+Confusion matrix visualizations
+
+CSVs and JSON logs for CI compatibility
+
+License
+MIT License
