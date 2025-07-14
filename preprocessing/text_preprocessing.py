@@ -1,31 +1,31 @@
+# preprocessing/text_processing.py
+
 import spacy
 
-# Load spaCy model once (could be configurable)
+# load spacy english model
 nlp = spacy.load("en_core_web_sm")
 
 def preprocess_texts(records, config):
     """
-    Given a list of records, adds tokenized texts and entities extracted.
-    Updates each record dict with:
-    - 'tokens': list of token strings
-    - 'preprocessed_text': cleaned/lowercased text (optional)
-    - 'sentiment_labels': list or aggregated sentiment labels for training
-
-    For now, just tokenizes text and assigns sentiment labels simplified.
-
-    Returns updated list of records.
+    Cleans and annotates text records in-place.
+    - Adds 'preprocessed_text'
+    - Adds 'tokens'
+    - Optionally adds 'spacy_entities'
     """
-    for record in records:
-        doc = nlp(record['text'])
-        record['tokens'] = [token.text for token in doc]
-        record['preprocessed_text'] = record['text'].lower()
+    use_ner = config.get("preprocessing", {}).get("enable_ner", True)
 
-        # Simple placeholder: map sentiment dict to a single label for training
-        # Example: pick highest scoring sentiment key
-        if record['sentiments']:
-            max_sentiment = max(record['sentiments'], key=record['sentiments'].get)
-            record['sentiment_labels'] = max_sentiment
-        else:
-            record['sentiment_labels'] = "neutral"
+    for rec in records:
+        text = rec["text"]
+
+        # lowercase, strip whitespace, could add emoji/remove punctuation etc.
+        clean_text = text.lower().strip()
+        rec["preprocessed_text"] = clean_text
+
+        doc = nlp(clean_text)
+        tokens = [token.text for token in doc if not token.is_punct and not token.is_space]
+        rec["tokens"] = tokens
+
+        if use_ner:
+            rec["spacy_entities"] = [(ent.text, ent.label_) for ent in doc.ents]
 
     return records
