@@ -1,0 +1,27 @@
+# config/example_config.yaml
+
+data:
+  input_file: data/sample_entity_sentiment.csv
+
+vectorizer:
+  type: glove           # Options: "tfidf", "glove"
+  glove_path: data/glove.6B.100d.txt
+  embedding_dim: 100
+  max_features: 10000   # only used by tfidf
+  ngram_range: [1, 2]
+
+model:
+  type: lstm            # Options: "logreg", "svm", "dense", "lstm"
+  input_dim: 10000      # used for dense/tfidf
+  timesteps: 25         # used for LSTM
+  embedding_dim: 100    # must match glove dim
+  units: 64
+  dropout_rate: 0.4
+  learning_rate: 0.001
+  num_classes: 5
+  epochs: 8
+  batch_size: 32
+
+test_fraction: 0.25
+
+output_dir: reports
