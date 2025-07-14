@@ -1,4 +1,10 @@
 # models/model_factory.py
+#YAML USAGE  
+##model:
+#  type: lstm
+#  timesteps: 25
+#  embedding_dim: 100
+#  ...
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
