@@ -2,7 +2,14 @@
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
-import os
+import os 
+
+#USAGE IN YAML CONFIG
+
+# #vectorizer:
+#  type: glove
+#  glove_path: data/glove.6B.100d.txt
+#  embedding_dim: 100
 
 class GloveVectorizer:
     def __init__(self, glove_path, embedding_dim):
