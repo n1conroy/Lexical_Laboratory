@@ -12,7 +12,7 @@ NLP experimentation framework for benchmarking entity-specific sentiment analysi
 - Support comparison across:
   - TF-IDF + Linear Models (LogisticRegression, SVM)
   - GloVe Embeddings + Dense Classifiers
-  - Hand-crafted TensorFlow LSTM networks
+  - TensorFlow networks
 - Enable **repeatable**, **transparent**, and **modular** experimentation
 - Support **CI/CD** benchmarking via GitHub Actions or other pipelines
 
